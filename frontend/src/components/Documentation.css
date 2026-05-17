@@ -1,0 +1,709 @@
+/* ------------------------------
+   GLOBAL BASE
+--------------------------------*/
+.documentation-page {
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+  color: #111827;
+  background: radial-gradient(1200px 650px at 15% 0%, rgba(102, 126, 234, 0.12), transparent 60%),
+    radial-gradient(900px 560px at 85% 20%, rgba(118, 75, 162, 0.10), transparent 55%),
+    #f8fafc;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.documentation-page .landing-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.docs-nav {
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.docs-nav-container {
+  width: 100%;
+  margin: 0;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.docs-nav-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.docs-nav-button {
+  padding: 0.5rem 1.5rem;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.docs-nav-button:hover {
+  background: #5568d3;
+  transform: translateY(-1px);
+}
+
+.docs-container {
+  display: flex;
+  flex: 1;
+  padding: 24px;
+  gap: 18px;
+  width: 100%;
+  min-height: auto;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.docs-sidebar {
+  flex-shrink: 0;
+  position: sticky;
+  align-self: flex-start;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(15, 23, 42, 0.10);
+  border-radius: 16px;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+  z-index: 5;
+  min-width: 200px;
+  max-width: 500px;
+  scrollbar-width: auto;
+  scrollbar-color: #94a3b8 #f1f5f9;
+  scroll-behavior: smooth;
+}
+
+/* Webkit scrollbar styling (Chrome, Safari, Edge) - Visible scrollbar for sliding up and down */
+.docs-sidebar::-webkit-scrollbar {
+  width: 14px;
+  -webkit-appearance: none;
+  display: block;
+}
+
+.docs-sidebar::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-left: 1px solid #e2e8f0;
+  border-radius: 0;
+}
+
+.docs-sidebar::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 7px;
+  border: 2px solid #f1f5f9;
+  min-height: 40px;
+  transition: background 0.2s ease;
+}
+
+.docs-sidebar::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+.docs-sidebar::-webkit-scrollbar-thumb:active {
+  background: #475569;
+}
+
+/* Scrollbar buttons (up/down arrows) */
+.docs-sidebar::-webkit-scrollbar-button {
+  display: block;
+  height: 16px;
+  width: 14px;
+  background: #f1f5f9;
+  border-left: 1px solid #e2e8f0;
+}
+
+.docs-sidebar::-webkit-scrollbar-button:start:decrement {
+  background: #f1f5f9 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%2364748b' d='M7 4l-5 5h10z'/%3E%3C/svg%3E") no-repeat center;
+  background-size: 10px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.docs-sidebar::-webkit-scrollbar-button:end:increment {
+  background: #f1f5f9 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%2364748b' d='M7 10l5-5H2z'/%3E%3C/svg%3E") no-repeat center;
+  background-size: 10px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.docs-sidebar::-webkit-scrollbar-button:hover {
+  background-color: #e2e8f0;
+}
+
+.docs-sidebar::-webkit-scrollbar-button:start:decrement:hover {
+  background-color: #e2e8f0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%23475569' d='M7 4l-5 5h10z'/%3E%3C/svg%3E");
+  background-size: 10px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.docs-sidebar::-webkit-scrollbar-button:end:increment:hover {
+  background-color: #e2e8f0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%23475569' d='M7 10l5-5H2z'/%3E%3C/svg%3E");
+  background-size: 10px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.docs-sidebar-resize-handle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4px;
+  height: 100%;
+  background: transparent;
+  cursor: col-resize;
+  z-index: 11;
+  transition: background 0.2s ease;
+}
+
+.docs-sidebar-resize-handle:hover {
+  background: #667eea;
+}
+
+.docs-sidebar-resize-handle:active {
+  background: #5568d3;
+}
+
+/* Ensure sidebar stays below header */
+.documentation-page .docs-sidebar {
+  top: 110px;
+  z-index: 5;
+}
+
+.docs-sidebar-top {
+  padding: 16px 16px 10px;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 6;
+}
+
+.docs-sidebar-title {
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+  margin-bottom: 10px;
+}
+
+.docs-sidebar-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(15, 23, 42, 0.10);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.docs-sidebar-search input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font-size: 0.9rem;
+  color: #111827;
+}
+
+.docs-sidebar-nav {
+  padding: 12px 12px 16px;
+}
+
+.docs-sidebar-link {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: #4b5563;
+  text-decoration: none;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.docs-sidebar-link:hover {
+  background: #f3f4f6;
+  color: #667eea;
+}
+
+.docs-sidebar-link.active {
+  background: #667eea;
+  color: white;
+}
+
+/* Main docs wrapper */
+.docs-content {
+  flex: 1;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+/* Hero */
+.docs-hero {
+  padding: 28px 16px 18px;
+}
+
+.docs-hero-inner {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 22px;
+  border-radius: 18px;
+  border: 1px solid rgba(15, 23, 42, 0.10);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+}
+
+.docs-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: rgba(255, 255, 255, 0.75);
+  color: #111827;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* Match landing page hero title: "Query your data using" */
+.docs-hero-title {
+  margin: 12px 0 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #0f172a;
+}
+
+@media (min-width: 768px) {
+  .docs-hero-title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .docs-hero-title {
+    font-size: 1.75rem;
+  }
+}
+
+.docs-hero-subtitle {
+  margin: 10px 0 0;
+  color: #475569;
+  line-height: 1.7;
+  max-width: 80ch;
+}
+
+.docs-hero-actions {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.docs-hero-action {
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: rgba(255, 255, 255, 0.85);
+  color: #111827;
+  padding: 10px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.docs-hero-action:hover {
+  background: #111827;
+  border-color: #111827;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* ------------------------------
+   HEADINGS
+--------------------------------*/
+.docs-section h1 {
+  display: none;
+}
+
+.docs-section h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 3rem 0 1.25rem 0;
+  text-align: center;
+  color: #1e293b;
+}
+
+.docs-section h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 2rem 0 1rem 0;
+  text-align: left;
+  color: #334155;
+}
+
+.docs-section h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.75rem 0;
+  text-align: left;
+  color: #475569;
+}
+
+/* ------------------------------
+   SECTIONS
+--------------------------------*/
+.docs-section {
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto 18px;
+  padding: 22px;
+  border: 1px solid rgba(15, 23, 42, 0.10);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+  text-align: left;
+}
+
+.docs-section.hidden {
+  display: none;
+}
+
+.docs-section.active {
+  display: block;
+}
+
+/* ------------------------------
+   PARAGRAPHS & TEXT
+--------------------------------*/
+.docs-section p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  margin: 1rem 0;
+  color: #374151;
+}
+
+/* Subtle highlight boxes */
+.callout {
+  background: #f1f5f9;
+  padding: 1rem 1.25rem;
+  border-left: 4px solid #3b82f6;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+  font-size: 1rem;
+}
+
+.docs-note {
+  background: #fef3c7;
+  padding: 1rem 1.25rem;
+  border-left: 4px solid #f59e0b;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+  font-size: 1rem;
+  color: #78350f;
+}
+
+.docs-note strong {
+  color: #92400e;
+}
+
+/* ------------------------------
+   LISTS
+--------------------------------*/
+.docs-section ul,
+.docs-section ol {
+  margin-left: 2rem;
+  padding-left: 0.5rem;
+}
+
+.docs-section li {
+  margin: 0.35rem 0;
+  line-height: 1.7;
+  font-size: 1.05rem;
+  color: #374151;
+}
+
+/* ------------------------------
+   CODE BLOCKS
+--------------------------------*/
+pre {
+  background: #111827;
+  color: #f3f4f6;
+  padding: 1.5rem;
+  border-radius: 10px;
+  overflow-x: auto;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 1.75rem 0;
+}
+
+code {
+  background: #e5e7eb;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
+
+/* ------------------------------
+   LINKS
+--------------------------------*/
+.docs-section a {
+  color: #2563eb;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.docs-section a:hover {
+  text-decoration: underline;
+}
+
+/* ------------------------------
+   BUTTONS
+--------------------------------*/
+.button {
+  display: inline-block;
+  background: #2563eb;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.button:hover {
+  background: #1d4ed8;
+}
+
+/* ------------------------------
+   TABLES
+--------------------------------*/
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  font-size: 0.95rem;
+}
+
+th {
+  background: #f1f5f9;
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: 600;
+}
+
+td {
+  padding: 0.75rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* ------------------------------
+   SPACING HELPERS
+--------------------------------*/
+.spacer-lg {
+  height: 3rem;
+}
+
+.spacer-md {
+  height: 2rem;
+}
+
+.spacer-sm {
+  height: 1rem;
+}
+
+@media (max-width: 768px) {
+  .docs-container {
+    flex-direction: column;
+  }
+
+  .docs-sidebar {
+    width: 100% !important;
+    position: static;
+    height: auto;
+    max-height: none;
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
+    top: auto;
+    bottom: auto;
+  }
+
+  .docs-sidebar-resize-handle {
+    display: none;
+  }
+
+  .docs-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding: 1.5rem;
+  }
+
+  .docs-sidebar-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .docs-sidebar-link {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .docs-content {
+    padding: 2rem 1.5rem;
+  }
+
+  .docs-section h1 {
+    font-size: 2rem;
+  }
+
+  .docs-section h2 {
+    font-size: 1.75rem;
+  }
+
+  .docs-data-sources-grid,
+  .docs-examples,
+  .docs-chart-types {
+    grid-template-columns: 1fr;
+  }
+
+  .docs-nav-container {
+    padding: 0 1rem;
+  }
+
+  .documentation-page .landing-footer {
+    padding: 2rem 1rem 1rem;
+  }
+
+  .documentation-page .footer-content {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* Footer for Documentation Page */
+.documentation-page .landing-footer {
+  background: #f9fafb;
+  color: #111827;
+  padding: 3rem 2rem 1.5rem;
+  margin-top: 0;
+  border-top: 1px solid #e5e7eb;
+}
+
+.documentation-page .footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.documentation-page .footer-section h4 {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: #111827;
+}
+
+.documentation-page .footer-section p {
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.documentation-page .footer-section a {
+  display: block;
+  color: #6b7280;
+  text-decoration: none;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.documentation-page .footer-section a:hover {
+  color: #111827;
+}
+
+.documentation-page .footer-bottom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 2rem;
+  border-top: 1px solid #e5e7eb;
+  text-align: center;
+  color: #9ca3af;
+}
+
+/* Navigation for Documentation Page */
+.documentation-page .landing-nav {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.documentation-page .nav-link {
+  color: #111827;
+}
+
+.documentation-page .nav-link:hover {
+  color: #111827;
+}
+
+.documentation-page .nav-link.active {
+  color: #111827;
+  font-weight: 600;
+}
+
+.documentation-page .nav-link::after {
+  background: #111827;
+}
+
+.documentation-page .nav-button.secondary {
+  background: transparent;
+  border-color: #d1d5db;
+  color: #111827;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.documentation-page .nav-button.secondary:hover {
+  background: #f3f4f6;
+  border-color: #cbd5f5;
+}
+
+.documentation-page .nav-button.primary {
+  background: #111827;
+  color: #ffffff;
+  border: none;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.documentation-page .nav-button.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.18);
+}
+

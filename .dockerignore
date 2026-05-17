@@ -1,0 +1,14 @@
+node_modules
+frontend/node_modules
+dist
+frontend/dist
+.git
+.github
+.cursor
+coverage
+*.log
+.env
+.env.*
+agent-tools
+**/*.local
+**/.DS_Store

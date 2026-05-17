@@ -1,0 +1,610 @@
+.pricing-section {
+  padding: 80px 20px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+}
+
+.pricing-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header */
+.pricing-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.pricing-header h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 10px;
+}
+
+.pricing-header p {
+  font-size: 1.1rem;
+  color: #718096;
+}
+
+/* Billing Toggle */
+.billing-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 50px;
+  flex-wrap: wrap;
+}
+
+.toggle-btn {
+  padding: 12px 30px;
+  border: 2px solid #e2e8f0;
+  background: white;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  color: #4a5568;
+}
+
+.toggle-btn:hover {
+  border-color: #3182ce;
+  color: #3182ce;
+}
+
+.toggle-btn.active {
+  background: #3182ce;
+  color: white;
+  border-color: #3182ce;
+}
+
+.save-badge {
+  display: inline-block;
+  background: #48bb78;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  margin-left: 8px;
+  font-weight: 700;
+}
+
+/* Additional Members Section */
+.additional-members-section {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 50px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+}
+
+.additional-members-section label {
+  display: block;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 12px;
+}
+
+.members-input-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.member-btn {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #e2e8f0;
+  background: white;
+  border-radius: 6px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #3182ce;
+  font-weight: bold;
+}
+
+.member-btn:hover {
+  background: #f7fafc;
+  border-color: #3182ce;
+}
+
+.member-input {
+  width: 60px;
+  height: 40px;
+  border: 2px solid #e2e8f0;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.member-input:focus {
+  outline: none;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+}
+
+.member-cost {
+  font-weight: 600;
+  color: #3182ce;
+  white-space: nowrap;
+}
+
+/* Pricing Cards */
+.pricing-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+  margin-bottom: 80px;
+}
+
+.pricing-card {
+  background: white;
+  border-radius: 12px;
+  padding: 40px 30px;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  display: flex;
+  flex-direction: column;
+}
+
+.pricing-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.pricing-card.highlighted {
+  border: 2px solid #3182ce;
+  transform: scale(1.05);
+}
+
+.pricing-card.highlighted:hover {
+  transform: scale(1.05) translateY(-5px);
+}
+
+.popular-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #3182ce;
+  color: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.plan-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Price Section */
+.price-section {
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+  border-bottom: 2px solid #f7fafc;
+}
+
+.price-breakdown {
+  background: #f7fafc;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.price-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 0.95rem;
+}
+
+.price-item .label {
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.price-item .amount {
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.price-item.total {
+  border-top: 2px solid #e2e8f0;
+  padding-top: 12px;
+  margin-top: 12px;
+  font-size: 1.1rem;
+}
+
+.price-item.total .label {
+  color: #1a202c;
+  font-weight: 700;
+}
+
+.price-item.total .amount {
+  color: #3182ce;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.period {
+  text-align: center;
+  color: #718096;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Stripe notice - matches Stripe merchant/partner requirements */
+.pricing-stripe-notice {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #718096;
+  margin: 0 0 2rem;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Embedded (inside UpgradePlanModal) */
+.pricing-plans-embedded {
+  padding: 1rem 0;
+  min-height: auto;
+  background: transparent;
+}
+
+.pricing-plans-embedded .pricing-container {
+  max-width: 100%;
+}
+
+.pricing-plans-embedded .pricing-cards {
+  margin-bottom: 1.5rem;
+}
+
+.pricing-plans-embedded .pricing-stripe-notice {
+  margin-bottom: 1rem;
+}
+
+.pricing-plans-embedded-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.pricing-plans-embedded-actions .contact-btn {
+  margin: 0;
+}
+
+.pricing-plans-embedded-actions .contact-btn.secondary {
+  background: #e2e8f0;
+  color: #2d3748;
+}
+
+.pricing-plans-embedded-actions .contact-btn.secondary:hover {
+  background: #cbd5e0;
+}
+
+/* Features List */
+.features-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 30px 0;
+  flex-grow: 1;
+}
+
+.features-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  color: #4a5568;
+  font-size: 0.95rem;
+}
+
+.check-icon {
+  color: #48bb78;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* CTA Button */
+.subscribe-btn {
+  padding: 14px 28px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.subscribe-btn.primary {
+  background: #3182ce;
+  color: white;
+}
+
+.subscribe-btn.primary:hover {
+  background: #2c5aa0;
+  box-shadow: 0 8px 16px rgba(49, 130, 206, 0.3);
+}
+
+.subscribe-btn.secondary {
+  background: #f7fafc;
+  color: #3182ce;
+  border: 2px solid #3182ce;
+}
+
+.subscribe-btn.secondary:hover {
+  background: #edf2f7;
+}
+
+/* FAQ Section */
+.pricing-faq {
+  background: white;
+  padding: 60px 40px;
+  border-radius: 12px;
+  margin-bottom: 60px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+}
+
+.pricing-faq h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a202c;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.faq-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.faq-item {
+  padding: 20px;
+  background: #f7fafc;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+  background: #edf2f7;
+  transform: translateY(-2px);
+}
+
+.faq-item h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a202c;
+  margin: 0 0 10px 0;
+}
+
+.faq-item p {
+  font-size: 0.95rem;
+  color: #4a5568;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Enterprise Section */
+.enterprise-section {
+  text-align: center;
+  padding: 60px 40px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  color: white;
+}
+
+.enterprise-section h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.enterprise-section p {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  opacity: 0.95;
+}
+
+.contact-btn {
+  padding: 14px 40px;
+  background: white;
+  color: #667eea;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.contact-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.contact-btn.secondary {
+  background: #e2e8f0;
+  color: #4a5568;
+}
+
+.contact-btn.secondary:hover {
+  background: #cbd5e0;
+}
+
+/* Inline Enterprise contact card (embedded on /app_admin) */
+.enterprise-contact-card {
+  padding: 24px;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.enterprise-contact-card h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: #1a202c;
+}
+
+.enterprise-contact-card > p {
+  font-size: 0.95rem;
+  color: #4a5568;
+  margin: 0 0 20px 0;
+}
+
+.enterprise-contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.enterprise-contact-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.enterprise-contact-row label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.enterprise-contact-row input,
+.enterprise-contact-row textarea {
+  padding: 10px 12px;
+  border: 1px solid #cbd5e0;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.enterprise-contact-row textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.enterprise-contact-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+/* Enterprise plan card (no price, Contact Sales) */
+.pricing-card-enterprise .enterprise-price-text {
+  font-size: 1rem;
+  color: #4a5568;
+  margin: 0;
+}
+
+.pricing-plans-loading {
+  text-align: center;
+  padding: 24px;
+  color: #4a5568;
+  font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .pricing-section {
+    padding: 40px 15px;
+  }
+
+  .pricing-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .pricing-cards {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .pricing-card.highlighted {
+    transform: scale(1);
+  }
+
+  .pricing-card.highlighted:hover {
+    transform: translateY(-5px);
+  }
+
+  .pricing-faq {
+    padding: 40px 20px;
+  }
+
+  .pricing-faq h3 {
+    font-size: 1.5rem;
+  }
+
+  .faq-items {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .enterprise-section {
+    padding: 40px 20px;
+  }
+
+  .enterprise-section h3 {
+    font-size: 1.5rem;
+  }
+
+  .members-input-group {
+    flex-wrap: wrap;
+  }
+
+  .member-cost {
+    flex-basis: 100%;
+    text-align: center;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pricing-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .pricing-card {
+    padding: 25px 20px;
+  }
+
+  .price-breakdown {
+    padding: 15px;
+  }
+
+  .price-item {
+    font-size: 0.85rem;
+  }
+
+  .subscribe-btn {
+    padding: 12px 20px;
+    font-size: 0.9rem;
+  }
+
+  .toggle-btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}

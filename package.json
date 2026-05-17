@@ -1,0 +1,67 @@
+{
+  "name": "aiquery",
+  "version": "1.0.0",
+  "description": "Natural language interface for Google BigQuery with visualization",
+  "main": "dist/backend/server.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "node dist/backend/server.js",
+    "dev": "ts-node-dev --respawn --transpile-only backend/server.ts",
+    "build": "tsc --project tsconfig.backend.json",
+    "build:backend": "tsc --project tsconfig.backend.json",
+    "test": "jest --config jest.config.ts --forceExit"
+  },
+  "dependencies": {
+    "@google-cloud/bigquery": "^7.9.3",
+    "@google-cloud/storage": "^7.16.0",
+    "@google/generative-ai": "^0.24.0",
+    "@slack/web-api": "^7.14.1",
+    "axios": "^1.7.9",
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "form-data": "^4.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mssql": "^12.2.0",
+    "multer": "^2.1.1",
+    "mysql2": "^3.18.0",
+    "nodemailer": "^7.0.12",
+    "openai": "^4.85.4",
+    "pg": "^8.18.0",
+    "python-shell": "^5.0.0",
+    "resend": "^6.9.1",
+    "snowflake-sdk": "^2.3.4",
+    "stripe": "^20.2.0",
+    "uuid": "^11.0.3",
+    "ws": "^8.18.0",
+    "xlsx": "^0.18.5",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@jest/types": "^29.6.3",
+    "@types/express": "^5.0.0",
+    "@types/express-serve-static-core": "^5.0.6",
+    "@types/jest": "^29.5.14",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.1.0",
+    "@types/node": "^22.13.5",
+    "@types/nodemailer": "^7.0.9",
+    "@types/pg": "^8.16.0",
+    "@types/supertest": "^6.0.2",
+    "@types/uuid": "^10.0.0",
+    "jest": "^29.6.2",
+    "supertest": "^7.1.3",
+    "ts-jest": "^29.1.1",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.7.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}

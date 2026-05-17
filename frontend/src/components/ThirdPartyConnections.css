@@ -1,0 +1,429 @@
+.third-party-connections-button {
+  width: calc(100% - 24px);
+  margin: 6px 8px;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding:  8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #333;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.third-party-connections-button:hover {
+  background: #f8f9fa;
+  border-color: #667eea;
+  transform: translateX(2px);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+}
+
+.connections-icon {
+  font-size: 18px;
+  width: 24px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.connections-text {
+  font-size: 14px;
+  font-weight: 600;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Hide text when sidebar is collapsed or narrow */
+.data-source-sidebar:not(.expanded) .connections-text,
+.data-source-sidebar.narrow .connections-text {
+  display: none;
+}
+
+/* Hide connection status when text is hidden */
+.data-source-sidebar:not(.expanded) .third-party-connections-button .connection-status,
+.data-source-sidebar.narrow .third-party-connections-button .connection-status {
+  display: none;
+}
+
+/* Adjust button padding when only icon is shown */
+.data-source-sidebar:not(.expanded) .third-party-connections-button,
+.data-source-sidebar.narrow .third-party-connections-button {
+  justify-content: center;
+  padding: 12px;
+}
+
+.data-source-sidebar:not(.expanded) .llm-config-header,
+.data-source-sidebar.narrow .llm-config-header {
+  justify-content: center;
+}
+
+.third-party-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.third-party-panel {
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.third-party-modal-content.inline {
+  max-width: none;
+  width: 100%;
+  max-height: none;
+  height: auto;
+  box-shadow: none;
+  animation: none;
+}
+
+.third-party-modal-content {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+  background: white;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: modalSlideIn 0.3s ease;
+}
+
+/* Scrollbar styling for modal content */
+.third-party-modal-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.third-party-modal-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.third-party-modal-content::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+.third-party-modal-content::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.third-party-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.third-party-modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.third-party-modal-close {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #999;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.third-party-modal-close:hover {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.third-party-connections-list {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+.resize-handle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  cursor: nwse-resize;
+  background: linear-gradient(-45deg, transparent 30%, #ccc 30%, #ccc 35%, transparent 35%, transparent 65%, #ccc 65%, #ccc 70%, transparent 70%);
+  z-index: 10;
+}
+
+.resize-handle:hover {
+  background: linear-gradient(-45deg, transparent 30%, #667eea 30%, #667eea 35%, transparent 35%, transparent 65%, #667eea 65%, #667eea 70%, transparent 70%);
+}
+
+.connection-item {
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.connection-item:hover {
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+}
+
+.connection-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.connection-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.connection-icon-wrapper.slack {
+  background: #4A154B;
+}
+
+.connection-icon-wrapper.teams {
+  background: #6264A7;
+}
+
+.connection-icon {
+  width: 28px;
+  height: 28px;
+  color: white;
+}
+
+.connection-info {
+  flex: 1;
+}
+
+.connection-info h3 {
+  margin: 0 0 4px 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.connection-info p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.connection-status {
+  font-size: 12px;
+  color: #999;
+  font-weight: 500;
+}
+
+.connection-status.connected {
+  color: #22c55e;
+}
+
+.connection-status.not-connected {
+  color: #e74c3c;
+}
+
+.connection-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.connection-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.connection-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.connection-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.connection-input {
+  flex: 1;
+  padding: 10px 40px 10px 14px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.connection-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.connection-input-toggle {
+  position: absolute;
+  right: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  font-size: 16px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.connection-input-toggle:hover {
+  background-color: #f0f0f0;
+}
+
+.connection-actions {
+  margin-top: 12px;
+}
+
+.connection-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.connection-button.connect,
+.connection-button.save {
+  background: #667eea;
+  color: white;
+}
+
+.connection-button.connect:hover,
+.connection-button.save:hover:not(:disabled) {
+  background: #5568d3;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.connection-button.save:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.connection-button.reset {
+  background: #f5f5f5;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.connection-button.reset:hover:not(:disabled) {
+  background: #ebebeb;
+  border-color: #ccc;
+}
+
+.connection-button.reset:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.connection-button.test {
+  background: #667eea;
+  color: white;
+}
+
+.connection-button.test:hover:not(:disabled) {
+  background: #5568d3;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.connection-button.test:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.connection-button.disconnect {
+  background: #f44336;
+  color: white;
+}
+
+.connection-button.disconnect:hover {
+  background: #d32f2f;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .third-party-connections-button {
+    padding: 10px 12px;
+  }
+
+  .connections-text {
+    display: none;
+  }
+
+  .connection-header {
+    flex-wrap: wrap;
+  }
+
+  .connection-form {
+    flex-direction: column;
+  }
+}
+

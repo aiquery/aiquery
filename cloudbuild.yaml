@@ -1,0 +1,60 @@
+# Cloud Build config for AIQuery (e.g. GitHub → Cloud Build trigger → build & deploy).
+# Build context: repo root. Pass Turnstile site key via trigger substitution (see docs).
+
+steps:
+  # Build Docker image with Vite build-time env (Turnstile site key).
+  # Set _VITE_CLOUDFLARE_TURNSTILE_SITE_KEY in your Cloud Build trigger (Variables tab).
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-f'
+      - 'Dockerfile.prod'
+      - '--build-arg'
+      - 'VITE_CLOUDFLARE_TURNSTILE_SITE_KEY=${_VITE_CLOUDFLARE_TURNSTILE_SITE_KEY}'
+      - '-t'
+      - '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_SERVICE_NAME}:${SHORT_SHA}'
+      - '-t'
+      - '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_SERVICE_NAME}:latest'
+      - '.'
+
+  # Deploy to Cloud Run. (Cloud Build SA needs Cloud Run Admin; add --add-cloudsql-instances if you use Cloud SQL.)
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - '${_SERVICE_NAME}'
+      - '--image=${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_SERVICE_NAME}:${SHORT_SHA}'
+      - '--region=${_LOCATION}'
+      - '--platform=managed'
+      - '--allow-unauthenticated'
+      - '--port=3000'
+      - '--set-env-vars=NODE_ENV=production'
+      - '--memory=${_MEMORY}'
+      - '--cpu=${_CPU}'
+      - '--min-instances=${_MIN_INSTANCES}'
+      - '--max-instances=${_MAX_INSTANCES}'
+      - '--timeout=${_TIMEOUT}'
+      - '--concurrency=${_CONCURRENCY}'
+    id: deploy
+
+# Push the image(s) to Artifact Registry
+images:
+  - '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_SERVICE_NAME}:${SHORT_SHA}'
+  - '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_SERVICE_NAME}:latest'
+
+# Substitution defaults (override in trigger: _VITE_CLOUDFLARE_TURNSTILE_SITE_KEY, _LOCATION, _REPOSITORY, _SERVICE_NAME)
+substitutions:
+  _LOCATION: 'us-central1'
+  _REPOSITORY: 'aiquery-repo'
+  _SERVICE_NAME: 'aiquery'
+  _VITE_CLOUDFLARE_TURNSTILE_SITE_KEY: ''
+  _MEMORY: '1Gi'
+  _CPU: '1'
+  _MIN_INSTANCES: '0'
+  _MAX_INSTANCES: '10'
+  _TIMEOUT: '300'
+  _CONCURRENCY: '80'
+
+options:
+  logging: CLOUD_LOGGING_ONLY

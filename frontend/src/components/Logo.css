@@ -1,0 +1,94 @@
+.aiquery-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 20px;
+  cursor: default;
+  text-decoration: none;
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.3));
+}
+
+.logo-text {
+  display: flex;
+  align-items: baseline;
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: -0.5px;
+}
+
+.logo-primary {
+  color: #111827;
+  text-shadow: none;
+  font-weight: 700;
+}
+
+.logo-secondary {
+  color: #b0b0ff;
+  font-weight: 600;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+/* Special styling for landing page navigation */
+.landing-nav .aiquery-logo .logo-primary {
+  color: #111827;
+  text-shadow: none;
+}
+
+.landing-nav .aiquery-logo .logo-secondary {
+  color: #c0c0ff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 255, 0.15);
+}
+
+.landing-nav .logo-icon img {
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 12px rgba(255, 255, 255, 0.2));
+}
+
+/* Landing-page-only logo: Azeret Mono SemiBold, links to main landing page; no 3D effects */
+.aiquery-logo-landing {
+  cursor: pointer;
+}
+
+.aiquery-logo-landing .logo-icon img {
+  filter: none;
+}
+
+.aiquery-logo-landing .logo-text .logo-primary {
+  font-family: 'Azeret Mono', monospace;
+  font-weight: 600;
+}
+
+/* Footer: image-only logo, sized to fit footer, clear */
+.aiquery-logo-image-only {
+  display: inline-block;
+  padding: 0;
+  margin-bottom: 0.75rem;
+}
+
+.aiquery-logo-image-only .logo-icon {
+  width: auto;
+  height: 56px;
+  max-width: 200px;
+}
+
+.aiquery-logo-image-only .logo-icon img {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  vertical-align: middle;
+}
+

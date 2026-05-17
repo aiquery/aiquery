@@ -1,0 +1,277 @@
+.help-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.help-dropdown-trigger {
+  border: none;
+  background: transparent;
+  border-radius: 10px;
+  padding: 6px 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #4b5563;
+  font-size: 14px;
+}
+
+.help-dropdown-trigger:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+/* Keep question mark button without solid background when using page button classes */
+.help-dropdown-trigger.workspace-icon-button,
+.help-dropdown-trigger.workspace-creation-help-button {
+  background: transparent;
+}
+
+.help-dropdown-trigger.workspace-icon-button:hover,
+.help-dropdown-trigger.workspace-creation-help-button:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.help-dropdown-trigger-sidebar {
+  padding: 8px;
+  background: transparent;
+}
+
+.help-dropdown-trigger-sidebar:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+/* When used in chat sidebar (chat-sidebar-icon-button circle small) */
+.help-dropdown-trigger-sidebar.chat-sidebar-icon-button {
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  justify-content: center;
+}
+
+.help-dropdown-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.help-dropdown-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.help-dropdown-trigger-sidebar .help-dropdown-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.help-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 6px;
+  min-width: 180px;
+  padding: 6px 0;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.help-dropdown-menu-sidebar {
+  top: auto;
+  bottom: 100%;
+  left: 0;
+  right: auto;
+  margin-top: 0;
+  margin-bottom: 6px;
+}
+
+.help-dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  text-align: left;
+  border: none;
+  background: none;
+  font-size: 14px;
+  color: #374151;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.help-dropdown-item:hover {
+  background: #f3f4f6;
+}
+
+/* Contact Support modal */
+.help-contact-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.help-contact-modal {
+  position: fixed;
+  background: #ffffff;
+  border-radius: 12px;
+  max-width: 440px;
+  width: 90%;
+  max-height: 90vh;
+  overflow: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.help-contact-modal-maximized {
+  max-width: none;
+  width: 100%;
+  height: 100%;
+  max-height: 100vh;
+  border-radius: 0;
+}
+
+.help-contact-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px 0;
+  cursor: move;
+  user-select: none;
+}
+
+.help-contact-modal-maximized .help-contact-header {
+  cursor: default;
+}
+
+.help-contact-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.help-contact-header-buttons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.help-contact-btn-icon {
+  border: none;
+  background: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+
+.help-contact-btn-icon:hover {
+  color: #111827;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.help-contact-close {
+  border: none;
+  background: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px 6px;
+}
+
+.help-contact-close:hover {
+  color: #111827;
+}
+
+.help-contact-intro {
+  padding: 8px 20px 16px;
+  margin: 0;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.help-contact-form {
+  padding: 0 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.help-contact-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.help-contact-row label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.help-contact-row input,
+.help-contact-row textarea {
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.help-contact-row textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.help-contact-error {
+  margin: 0;
+  padding: 10px 12px;
+  font-size: 0.9rem;
+  color: #b91c1c;
+  background: #fef2f2;
+  border-radius: 8px;
+  border: 1px solid #fecaca;
+}
+
+.help-contact-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.help-contact-btn {
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.help-contact-btn.secondary {
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  color: #374151;
+}
+
+.help-contact-btn.secondary:hover {
+  background: #f9fafb;
+}
+
+.help-contact-btn.primary {
+  border: none;
+  background: #111827;
+  color: #ffffff;
+}
+
+.help-contact-btn.primary:hover {
+  background: #374151;
+}

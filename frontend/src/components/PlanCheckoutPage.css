@@ -1,0 +1,348 @@
+.plan-checkout-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(1200px 650px at 15% 0%, rgba(102, 126, 234, 0.08), transparent 60%),
+    radial-gradient(900px 560px at 85% 20%, rgba(56, 189, 248, 0.08), transparent 55%),
+    #ffffff;
+}
+
+.plan-checkout-topbar {
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #e5e7eb;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.plan-checkout-back {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.95rem;
+  color: #4a5568;
+  background: transparent;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.plan-checkout-back:hover {
+  background: #f7fafc;
+  color: #2d3748;
+}
+
+.plan-checkout-topbar .aiquery-logo {
+  font-size: 1rem;
+}
+
+.plan-checkout-topbar .aiquery-logo .logo-icon {
+  width: auto;
+  height: 32px;
+  max-width: 120px;
+}
+
+.plan-checkout-topbar .aiquery-logo .logo-icon img {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.plan-checkout-container {
+  flex: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 2rem 3rem;
+  width: 100%;
+}
+
+.plan-checkout-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.plan-checkout-left {
+  padding: 1rem 0;
+}
+
+.plan-checkout-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 0.75rem 0;
+  letter-spacing: -0.02em;
+}
+
+.plan-checkout-desc {
+  font-size: 1rem;
+  color: #4b5563;
+  line-height: 1.6;
+  margin: 0 0 1.5rem 0;
+}
+
+.plan-checkout-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.plan-checkout-features li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: #374151;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.plan-checkout-features li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #10b981;
+  font-weight: 700;
+}
+
+.plan-checkout-right {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 10px 40px rgba(15, 23, 42, 0.1);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.plan-checkout-side-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 1.5rem 0;
+}
+
+.plan-checkout-toggle {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.plan-checkout-toggle-btn {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e5e7eb;
+  background: #fff;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.plan-checkout-toggle-btn:hover {
+  border-color: #111827;
+  color: #111827;
+}
+
+.plan-checkout-toggle-btn.active {
+  background: #111827;
+  border-color: #111827;
+  color: #fff;
+}
+
+.plan-checkout-save {
+  display: inline-block;
+  margin-left: 0.35rem;
+  padding: 2px 6px;
+  background: #10b981;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.plan-checkout-members {
+  margin-bottom: 1.5rem;
+}
+
+.plan-checkout-members label {
+  display: block;
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.plan-checkout-members-input {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.plan-checkout-members-input input {
+  width: 64px;
+  height: 42px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.plan-checkout-members-input input:focus {
+  outline: none;
+  border-color: #111827;
+}
+
+.plan-checkout-members-btn {
+  width: 42px;
+  height: 42px;
+  border: 2px solid #e5e7eb;
+  background: #fff;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #111827;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.plan-checkout-members-btn:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+/* Price breakdown – same format as Upgrade Plan card */
+.plan-checkout-price-section {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid #f7fafc;
+}
+
+.plan-checkout-price-breakdown {
+  background: #f7fafc;
+  padding: 1.25rem;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+}
+
+.plan-checkout-price-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  font-size: 0.95rem;
+}
+
+.plan-checkout-price-label {
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.plan-checkout-price-amount {
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.plan-checkout-price-item.plan-checkout-price-total {
+  border-top: 2px solid #e2e8f0;
+  padding-top: 12px;
+  margin-top: 12px;
+  font-size: 1.1rem;
+}
+
+.plan-checkout-price-item.plan-checkout-price-total .plan-checkout-price-label {
+  color: #1a202c;
+  font-weight: 700;
+}
+
+.plan-checkout-price-item.plan-checkout-price-total .plan-checkout-price-amount {
+  color: #3182ce;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.plan-checkout-period {
+  text-align: center;
+  color: #718096;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.plan-checkout-next {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: #111827;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.plan-checkout-next:hover:not(:disabled) {
+  background: #1f2937;
+  transform: translateY(-1px);
+}
+
+.plan-checkout-next:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.plan-checkout-footer {
+  padding: 1.5rem 2rem;
+  text-align: center;
+  border-top: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.plan-checkout-footer a {
+  color: #6b7280;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.plan-checkout-footer a:hover {
+  color: #111827;
+}
+
+.plan-checkout-footer-sep {
+  margin: 0 0.5rem;
+  color: #d1d5db;
+  font-size: 0.9rem;
+}
+
+.plan-checkout-copyright {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.85rem;
+  color: #9ca3af;
+}
+
+@media (max-width: 768px) {
+  .plan-checkout-topbar {
+    padding: 1rem;
+  }
+
+  .plan-checkout-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .plan-checkout-container {
+    padding: 2rem 1rem 2rem;
+  }
+
+  .plan-checkout-right {
+    padding: 1.5rem;
+  }
+
+  .plan-checkout-title {
+    font-size: 1.75rem;
+  }
+}

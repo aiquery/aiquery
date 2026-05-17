@@ -1,0 +1,118 @@
+.App {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.app-main-content {
+  flex: 1;
+  margin-left: 70px;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px 20px 20px;
+  max-width: none;
+  width: 100%;
+  transition: margin-left 0.1s ease;
+  position: relative;
+  box-sizing: border-box;
+}
+
+body.sidebar-expanded .app-main-content {
+  margin-left: var(--sidebar-width, 280px);
+}
+
+.app-header-full {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+.app-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 1;
+}
+
+.settings-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 24px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.settings-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: rotate(90deg) scale(1.1);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+}
+
+/* User Menu positioned at top right of main content */
+.app-main-content > .user-menu-container {
+  position: absolute;
+  top: 85px;
+  right: 20px;
+  z-index: 10000;
+}
+
+.app-subtitle {
+  margin: 6px 0 0 0;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 400;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .app-main-content {
+    margin-left: 0;
+    padding: 0 12px 12px 12px;
+  }
+  
+  .app-header-full {
+    padding: 12px;
+  }
+  
+  .chatbot-main-layout {
+    flex-direction: column;
+  }
+  
+  .chatbot-right-panel {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    border-left: none;
+    border-top: 1px solid #e0e0e0;
+  }
+  
+  .chatbot-input-form {
+    border-radius: 20px 20px 0 0;
+  }
+}
+
