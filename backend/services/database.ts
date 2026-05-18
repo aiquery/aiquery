@@ -1,99 +1,187 @@
-import { Pool, PoolClient } from 'pg';
+import { Pool, PoolClient, PoolConfig } from 'pg';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 // Database connection pool
 let pool: Pool | null = null;
+let loggedConnectionSource = false;
 
-/**
- * Human-readable, safe DB identity for startup logs.
- * Never includes passwords.
- */
-export function getDatabaseConnectionIdentity(): string {
+export interface PostgresConnectionConfig {
+  database: string;
+  host: string;
+  port: number;
+  user: string;
+  password: string;
+  ssl: false | { rejectUnauthorized: boolean };
+  connectionString?: string;
+  usesDatabaseUrl: boolean;
+}
+
+const POOL_OPTIONS: Pick<PoolConfig, 'max' | 'idleTimeoutMillis' | 'connectionTimeoutMillis'> = {
+  max: 20,
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 5000,
+};
+
+function resolvePostgresConnectionConfig(): PostgresConnectionConfig {
   const rawDatabaseUrl = process.env.DATABASE_URL?.trim();
+  const ssl = process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false;
+
   if (rawDatabaseUrl) {
     const isLikelyPostgresUrl = /^postgres(ql)?:\/\//i.test(rawDatabaseUrl);
     const looksRedacted = /REDACTED|\*{3,}/i.test(rawDatabaseUrl);
     if (isLikelyPostgresUrl && !looksRedacted) {
       try {
         const u = new URL(rawDatabaseUrl);
-        const host = u.hostname || 'localhost';
-        const port = u.port || '5432';
-        const database = (u.pathname || '/').replace(/^\//, '') || 'postgres';
-        const user = u.username ? decodeURIComponent(u.username) : 'unknown';
-        return `DATABASE_URL -> ${host}:${port}/${database} (user=${user})`;
+        const database = decodeURIComponent((u.pathname || '/').replace(/^\//, '') || 'aiquery');
+        return {
+          database,
+          host: u.hostname || 'localhost',
+          port: Number(u.port || '5432'),
+          user: u.username ? decodeURIComponent(u.username) : 'postgres',
+          password: u.password ? decodeURIComponent(u.password) : '',
+          ssl,
+          connectionString: rawDatabaseUrl,
+          usesDatabaseUrl: true,
+        };
       } catch {
-        // Fall through to DB_* description.
+        console.warn('[DB] Invalid DATABASE_URL detected, falling back to DB_* variables.');
       }
+    } else if (rawDatabaseUrl) {
+      console.warn('[DB] DATABASE_URL present but ignored (invalid or redacted). Falling back to DB_* variables.');
     }
   }
 
-  const host = process.env.DB_HOST || 'localhost';
-  const port = Number(process.env.DB_PORT || '5432');
-  const database = process.env.DB_NAME || 'aiquery';
-  const user = process.env.DB_USER || 'postgres';
-  return `DB_* -> ${host}:${port}/${database} (user=${user})`;
+  return {
+    database: process.env.DB_NAME || 'aiquery',
+    host: process.env.DB_HOST || 'localhost',
+    port: Number(process.env.DB_PORT || '5432'),
+    user: process.env.DB_USER || 'postgres',
+    password: process.env.DB_PASSWORD || 'postgres',
+    ssl,
+    usesDatabaseUrl: false,
+  };
+}
+
+function buildPoolConfig(database: string): PoolConfig {
+  const config = resolvePostgresConnectionConfig();
+
+  if (config.connectionString) {
+    const u = new URL(config.connectionString);
+    u.pathname = `/${database}`;
+    return {
+      connectionString: u.toString(),
+      ssl: config.ssl,
+      ...POOL_OPTIONS,
+    };
+  }
+
+  return {
+    host: config.host,
+    port: config.port,
+    database,
+    user: config.user,
+    password: config.password,
+    ssl: config.ssl,
+    ...POOL_OPTIONS,
+  };
+}
+
+function attachPoolErrorHandler(dbPool: Pool): void {
+  dbPool.on('error', (err) => {
+    console.error('Unexpected error on idle client', err);
+  });
+}
+
+function createPool(database: string): Pool {
+  const dbPool = new Pool(buildPoolConfig(database));
+  attachPoolErrorHandler(dbPool);
+  return dbPool;
+}
+
+function quotePostgresIdentifier(name: string): string {
+  return `"${name.replace(/"/g, '""')}"`;
+}
+
+/**
+ * Create the application database if it does not exist (connects via maintenance DB, default `postgres`).
+ * Set DB_AUTO_CREATE=false to disable (e.g. managed cloud Postgres).
+ */
+export async function ensureDatabaseExists(): Promise<void> {
+  if (process.env.DB_AUTO_CREATE === 'false') {
+    console.log('[DB] DB_AUTO_CREATE=false; skipping automatic database creation.');
+    return;
+  }
+
+  const config = resolvePostgresConnectionConfig();
+  const targetDatabase = config.database;
+  const maintenanceDatabase = (process.env.DB_MAINTENANCE_DATABASE || 'postgres').trim() || 'postgres';
+
+  if (targetDatabase === maintenanceDatabase) {
+    console.log(
+      `[DB] Target database "${targetDatabase}" is the maintenance database; skipping CREATE DATABASE.`
+    );
+    return;
+  }
+
+  const maintenancePool = createPool(maintenanceDatabase);
+
+  try {
+    const existing = await maintenancePool.query(
+      'SELECT 1 FROM pg_database WHERE datname = $1',
+      [targetDatabase]
+    );
+
+    if (existing.rows.length > 0) {
+      console.log(`[DB] Database "${targetDatabase}" already exists.`);
+      return;
+    }
+
+    await maintenancePool.query(`CREATE DATABASE ${quotePostgresIdentifier(targetDatabase)}`);
+    console.log(`[DB] Created database "${targetDatabase}".`);
+  } catch (error: unknown) {
+    const pgError = error as { code?: string };
+    if (pgError?.code === '42P04') {
+      console.log(`[DB] Database "${targetDatabase}" already exists.`);
+      return;
+    }
+    console.error(`[DB] Failed to create database "${targetDatabase}":`, error);
+    throw error;
+  } finally {
+    await maintenancePool.end();
+  }
+}
+
+/**
+ * Human-readable, safe DB identity for startup logs.
+ * Never includes passwords.
+ */
+export function getDatabaseConnectionIdentity(): string {
+  const config = resolvePostgresConnectionConfig();
+  if (config.usesDatabaseUrl) {
+    return `DATABASE_URL -> ${config.host}:${config.port}/${config.database} (user=${config.user})`;
+  }
+  return `DB_* -> ${config.host}:${config.port}/${config.database} (user=${config.user})`;
 }
 
 export function getDatabasePool(): Pool {
   if (!pool) {
-    const rawDatabaseUrl = process.env.DATABASE_URL?.trim();
-    let connectionString: string | undefined;
-    if (rawDatabaseUrl) {
-      const isLikelyPostgresUrl = /^postgres(ql)?:\/\//i.test(rawDatabaseUrl);
-      const looksRedacted = /REDACTED|\*{3,}/i.test(rawDatabaseUrl);
-      if (!isLikelyPostgresUrl || looksRedacted) {
-        console.warn('[DB] DATABASE_URL present but ignored (invalid or redacted). Falling back to DB_* variables.');
+    const config = resolvePostgresConnectionConfig();
+
+    if (!loggedConnectionSource) {
+      if (config.usesDatabaseUrl) {
+        console.log('[DB] Using DATABASE_URL for connection (validated).');
       } else {
-        try {
-          // Validate URL format before passing to pg (prevents runtime crash on invalid URL)
-          new URL(rawDatabaseUrl);
-          connectionString = rawDatabaseUrl;
-          console.log('[DB] Using DATABASE_URL for connection (validated).');
-        } catch (error) {
-          console.warn('[DB] Invalid DATABASE_URL detected, falling back to DB_* variables.');
-          connectionString = undefined;
-        }
+        console.log('[DB] Using DB_* variables for connection.');
+        console.log(
+          `[DB] Host: ${config.host} | Port: ${config.port} | DB: ${config.database} | User: ${config.user}`
+        );
       }
+      loggedConnectionSource = true;
     }
 
-    const ssl = process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false;
-
-    if (connectionString) {
-      pool = new Pool({
-        connectionString,
-        ssl,
-        max: 20,
-        idleTimeoutMillis: 30000,
-        connectionTimeoutMillis: 2000,
-      });
-    } else {
-      const host = process.env.DB_HOST || 'localhost';
-      const port = Number(process.env.DB_PORT || '5432');
-      const database = process.env.DB_NAME || 'aiquery';
-      const user = process.env.DB_USER || 'postgres';
-      const password = process.env.DB_PASSWORD || 'postgres';
-
-      console.log('[DB] Using DB_* variables for connection.');
-      console.log(`[DB] Host: ${host} | Port: ${port} | DB: ${database} | User: ${user}`);
-
-      pool = new Pool({
-        host,
-        port,
-        database,
-        user,
-        password,
-        ssl,
-        max: 20,
-        idleTimeoutMillis: 30000,
-        connectionTimeoutMillis: 2000,
-      });
-    }
-
-    pool.on('error', (err) => {
-      console.error('Unexpected error on idle client', err);
-    });
+    pool = createPool(config.database);
   }
 
   return pool;
@@ -101,6 +189,8 @@ export function getDatabasePool(): Pool {
 
 // Initialize database tables
 export async function initializeDatabase(): Promise<void> {
+  await ensureDatabaseExists();
+
   const pool = getDatabasePool();
   const client = await pool.connect();
 
@@ -713,7 +803,7 @@ export async function initializeDatabase(): Promise<void> {
       CREATE INDEX IF NOT EXISTS idx_demo_requests_created_at ON demo_requests(created_at DESC)
     `);
 
-    console.log('Database tables initialized successfully');
+    console.log('[DB] Database tables initialized successfully');
   } catch (error) {
     console.error('Error initializing database:', error);
     throw error;

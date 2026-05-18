@@ -1,3 +1,7 @@
 packages:
   - "backend"
   - "frontend"
+allowBuilds:
+  esbuild: false
+  lz4: false
+  sharp: false

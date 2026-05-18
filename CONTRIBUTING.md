@@ -46,7 +46,6 @@ Before large features, open an issue or discuss in an existing one so maintainer
 | Node.js | 18+ |
 | pnpm | Latest recommended |
 | PostgreSQL | 12+ |
-| Python | 3.8+ (visualization scripts) |
 | Git | For branching and PRs |
 
 ### Setup steps
@@ -66,25 +65,11 @@ Before large features, open an issue or discuss in an existing one so maintainer
    cd frontend && pnpm install && cd ..
    ```
 
-3. **Python chart dependencies**:
+3. **Start PostgreSQL** — the `aiquery` database and tables are created automatically when the backend starts (`ensureDatabaseExists` + `initializeDatabase` in `backend/services/database.ts`). Set `DB_AUTO_CREATE=false` if your host provisions the database for you.
 
-   ```bash
-   # Unix / macOS
-   ./backend/visualization/setup_python_deps.sh
+4. **Configure `.env`** at the repo root (see [README.md](README.md#quick-start)). Never commit `.env` or real API keys.
 
-   # Windows
-   backend\visualization\setup_python_deps.bat
-   ```
-
-4. **Create the database**:
-
-   ```sql
-   CREATE DATABASE aiquery;
-   ```
-
-5. **Configure `.env`** at the repo root (see [README.md](README.md#quick-start)). Never commit `.env` or real API keys.
-
-6. **Start dev servers** (two terminals):
+5. **Start dev servers** (two terminals):
 
    ```bash
    # Terminal 1 — backend (http://localhost:3000)
@@ -94,7 +79,7 @@ Before large features, open an issue or discuss in an existing one so maintainer
    cd frontend && pnpm dev
    ```
 
-7. **Optional — site admin**: Add your numeric user ID to `ADMIN_USER_IDS` in `.env` and restart the backend to access `/admin`. Find your ID via `GET /api/auth/me` after sign-in.
+6. **Optional — site admin**: Add your numeric user ID to `ADMIN_USER_IDS` in `.env` and restart the backend to access `/admin`. Find your ID via `GET /api/auth/me` after sign-in.
 
 For deeper reference, see [`docs/DEVELOPER_MANUAL.md`](docs/DEVELOPER_MANUAL.md).
 
@@ -120,8 +105,8 @@ AIquery is a full-stack app: a React SPA talks to an Express API, which orchestr
     ┌────┴────┬──────────────┬─────────────┐
     │         │              │             │
 ┌───▼───┐ ┌──▼──┐    ┌─────▼─────┐  ┌────▼────┐
-│PostgreSQL│ │LLM APIs│ │Data Sources│ │Python   │
-│ (app DB) │ │        │ │(customer)  │ │charts   │
+│PostgreSQL│ │LLM APIs│ │Data Sources│ │Charts   │
+│ (app DB) │ │        │ │(customer)  │ │(PNG)    │
 └─────────┘ └───────┘ └───────────┘ └─────────┘
 ```
 
@@ -132,7 +117,7 @@ AIquery is a full-stack app: a React SPA talks to an Express API, which orchestr
 ```
 User question → POST /api/chat → LLM (SQL generation)
 → sqlSafety check → data source adapter → results
-→ optional visualization → JSON response
+→ optional chart (LLM plan + SVG/PNG) → JSON response
 ```
 
 **RAG knowledge base**
@@ -169,6 +154,7 @@ Before executing generated SQL, the backend uses `backend/services/query/sqlSafe
 | `backend/services/workspace/` | Workspaces and membership |
 | `backend/services/slack/`, `microsoft-teams/` | Bot integrations |
 | `backend/rag-indices/` | On-disk RAG JSON indexes (per user/workspace) |
+| `backend/services/visualization/` | LLM chart plans, SVG render, PNG export (no Python) |
 | `frontend/src/components/` | Pages: chat, RAG, connections, settings, admin |
 | `frontend/src/contexts/`, `hooks/`, `utils/` | Shared client logic |
 | `docs/` | Extended documentation |
