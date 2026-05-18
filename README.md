@@ -2,7 +2,7 @@
   <img src="docs/assets/aiquery-logo.png" alt="AIquery logo" width="220" />
 </p>
 
-<h1 align="center">AIquery</h1>
+<h1 align="center">The first free and open source Text to SQL platform for enterprises production.</h1>
 
 <p align="center">
   Ask questions in natural language. Get SQL, results, charts, and answers from your connected data.
